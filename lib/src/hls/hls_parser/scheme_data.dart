@@ -1,7 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 class SchemeData {
   SchemeData({
 //    @required this.uuid,
@@ -49,10 +47,11 @@ class SchemeData {
   }
 
   @override
-  int get hashCode => hashValues(
-      /*uuid, */
-      licenseServerUrl,
-      mimeType,
-      data,
-      requiresSecureDecryption);
+  int get hashCode => Object.hashAll([
+        /*uuid, */
+        licenseServerUrl,
+        mimeType,
+        data,
+        requiresSecureDecryption
+      ]);
 }
