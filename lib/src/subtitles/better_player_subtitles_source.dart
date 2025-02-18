@@ -22,7 +22,7 @@ class BetterPlayerSubtitlesSource {
 
   //Additional headers used in HTTP request. Works only for
   // [BetterPlayerSubtitlesSourceType.memory] source type.
-  final Map<String, String>? headers;
+  final Future<Map<String, String>> Function()? headers;
 
   ///Is ASMS segmented source (more than 1 subtitle file). This shouldn't be
   ///configured manually.
@@ -55,7 +55,7 @@ class BetterPlayerSubtitlesSource {
     String? url,
     String? content,
     bool? selectedByDefault,
-    Map<String, String>? headers,
+    Future<Map<String, String>> Function()? headers,
   }) =>
       [
         BetterPlayerSubtitlesSource(

@@ -255,8 +255,11 @@ class BetterPlayerController {
     betterPlayerAsmsTracks.clear();
 
     ///Setup subtitles
-    if (betterPlayerDataSource.subtitles case final getSubtitles?) {
-      _betterPlayerSubtitlesSourceList.addAll(await getSubtitles());
+    final List<BetterPlayerSubtitlesSource>? betterPlayerSubtitlesSourceList =
+        betterPlayerDataSource.subtitles;
+    if (betterPlayerSubtitlesSourceList != null) {
+      _betterPlayerSubtitlesSourceList
+          .addAll(betterPlayerDataSource.subtitles!);
     }
 
     if (_isDataSourceAsms(betterPlayerDataSource)) {

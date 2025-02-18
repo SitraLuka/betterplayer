@@ -18,7 +18,7 @@ class BetterPlayerDataSource {
   final String url;
 
   ///Subtitles configuration
-  final Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles;
+  final List<BetterPlayerSubtitlesSource>? subtitles;
 
   ///Flag to determine if current data source is live stream
   final bool? liveStream;
@@ -110,7 +110,7 @@ class BetterPlayerDataSource {
   ///Bytes parameter is not used in this data source.
   factory BetterPlayerDataSource.network(
     String url, {
-    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
+    List<BetterPlayerSubtitlesSource>? subtitles,
     bool? liveStream,
     Future<Map<String, String>> Function()? headers,
     bool? useAsmsSubtitles,
@@ -151,7 +151,7 @@ class BetterPlayerDataSource {
   ///Bytes parameter is not used in this data source.
   factory BetterPlayerDataSource.file(
     String url, {
-    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
+    List<BetterPlayerSubtitlesSource>? subtitles,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     Map<String, String>? qualities,
@@ -180,7 +180,7 @@ class BetterPlayerDataSource {
   factory BetterPlayerDataSource.memory(
     List<int> bytes, {
     String? videoExtension,
-    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
+    List<BetterPlayerSubtitlesSource>? subtitles,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     Map<String, String>? qualities,
@@ -210,7 +210,7 @@ class BetterPlayerDataSource {
     BetterPlayerDataSourceType? type,
     String? url,
     List<int>? bytes,
-    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
+    List<BetterPlayerSubtitlesSource>? subtitles,
     bool? liveStream,
     Future<Map<String, String>> Function()? headers,
     bool? useAsmsSubtitles,
