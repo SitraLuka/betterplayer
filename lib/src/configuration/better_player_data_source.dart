@@ -18,13 +18,13 @@ class BetterPlayerDataSource {
   final String url;
 
   ///Subtitles configuration
-  final List<BetterPlayerSubtitlesSource>? subtitles;
+  final Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles;
 
   ///Flag to determine if current data source is live stream
   final bool? liveStream;
 
   /// Custom headers for player
-  final Map<String, String>? headers;
+  final Future<Map<String, String>> Function()? headers;
 
   ///Should player use hls / dash subtitles (ASMS - Adaptive Streaming Media Sources).
   final bool? useAsmsSubtitles;
@@ -110,9 +110,9 @@ class BetterPlayerDataSource {
   ///Bytes parameter is not used in this data source.
   factory BetterPlayerDataSource.network(
     String url, {
-    List<BetterPlayerSubtitlesSource>? subtitles,
+    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
     bool? liveStream,
-    Map<String, String>? headers,
+    Future<Map<String, String>> Function()? headers,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     bool? useAsmsAudioTracks,
@@ -151,7 +151,7 @@ class BetterPlayerDataSource {
   ///Bytes parameter is not used in this data source.
   factory BetterPlayerDataSource.file(
     String url, {
-    List<BetterPlayerSubtitlesSource>? subtitles,
+    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     Map<String, String>? qualities,
@@ -180,7 +180,7 @@ class BetterPlayerDataSource {
   factory BetterPlayerDataSource.memory(
     List<int> bytes, {
     String? videoExtension,
-    List<BetterPlayerSubtitlesSource>? subtitles,
+    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     Map<String, String>? qualities,
@@ -210,9 +210,9 @@ class BetterPlayerDataSource {
     BetterPlayerDataSourceType? type,
     String? url,
     List<int>? bytes,
-    List<BetterPlayerSubtitlesSource>? subtitles,
+    Future<List<BetterPlayerSubtitlesSource>> Function()? subtitles,
     bool? liveStream,
-    Map<String, String>? headers,
+    Future<Map<String, String>> Function()? headers,
     bool? useAsmsSubtitles,
     bool? useAsmsTracks,
     bool? useAsmsAudioTracks,

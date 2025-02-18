@@ -255,11 +255,8 @@ class BetterPlayerController {
     betterPlayerAsmsTracks.clear();
 
     ///Setup subtitles
-    final List<BetterPlayerSubtitlesSource>? betterPlayerSubtitlesSourceList =
-        betterPlayerDataSource.subtitles;
-    if (betterPlayerSubtitlesSourceList != null) {
-      _betterPlayerSubtitlesSourceList
-          .addAll(betterPlayerDataSource.subtitles!);
+    if (betterPlayerDataSource.subtitles case final getSubtitles?) {
+      _betterPlayerSubtitlesSourceList.addAll(await getSubtitles());
     }
 
     if (_isDataSourceAsms(betterPlayerDataSource)) {
@@ -302,7 +299,7 @@ class BetterPlayerController {
   Future _setupAsmsDataSource(BetterPlayerDataSource source) async {
     final String? data = await BetterPlayerAsmsUtils.getDataFromUrl(
       betterPlayerDataSource!.url,
-      _getHeaders(),
+      await _getHeaders(),
     );
     if (data != null) {
       final BetterPlayerAsmsDataHolder _response =
@@ -443,7 +440,7 @@ class BetterPlayerController {
       case BetterPlayerDataSourceType.network:
         await videoPlayerController?.setNetworkDataSource(
           betterPlayerDataSource.url,
-          headers: _getHeaders(),
+          headers: await _getHeaders(),
           useCache:
               _betterPlayerDataSource!.cacheConfiguration?.useCache ?? false,
           maxCacheSize:
@@ -1220,8 +1217,12 @@ class BetterPlayerController {
 
   ///Build headers map that will be used to setup video player controller. Apply
   ///DRM headers if available.
-  Map<String, String?> _getHeaders() {
-    final headers = betterPlayerDataSource!.headers ?? {};
+  Future<Map<String, String?>> _getHeaders() async {
+    Map<String, String?>? sourceHeaders;
+    if (betterPlayerDataSource!.headers case final getHeaders?) {
+      sourceHeaders = await getHeaders();
+    }
+    final headers = sourceHeaders ?? {};
     if (betterPlayerDataSource?.drmConfiguration?.drmType ==
             BetterPlayerDrmType.token &&
         betterPlayerDataSource?.drmConfiguration?.token != null) {
@@ -1242,11 +1243,16 @@ class BetterPlayerController {
     final cacheConfig = betterPlayerDataSource.cacheConfiguration ??
         const BetterPlayerCacheConfiguration(useCache: true);
 
+    Map<String, String?>? headers;
+    if (betterPlayerDataSource.headers case final getHeaders?) {
+      headers = await getHeaders();
+    }
+
     final dataSource = DataSource(
       sourceType: DataSourceType.network,
       uri: betterPlayerDataSource.url,
       useCache: true,
-      headers: betterPlayerDataSource.headers,
+      headers: headers,
       maxCacheSize: cacheConfig.maxCacheSize,
       maxCacheFileSize: cacheConfig.maxCacheFileSize,
       cacheKey: cacheConfig.key,
